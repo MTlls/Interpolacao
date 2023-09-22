@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "utils.h"
 #include "libLagrange.h"
+#include "libNewton.h"
 
 int main(int argc, char **argv) {
 	int_t n = 0;
@@ -30,8 +31,8 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	printf("\nf(x) = %lf\n", pLagrange(n, pontoX, tabela));
-
+	printf("\nfL(x) = %lf\n", pLagrange(n, pontoX, tabela));
+	printf("\nfD(x) = %lf\n", pNewton(n, pontoX, tabela));
 	free(tabela);
 	return 0;
 }

@@ -13,10 +13,10 @@ all: $(program)
 interpola: $(objs)
 	$(CC) $^ $(CFLAGS) $(LFLAGS) -o $@
 
-interpola.o: interpola.c libLagrange.h
-libLagrange.o: libLagrange.c libLagrange.h
-libNewton.o: libNewton.c libNewton.h
-
+interpola.o: interpola.c libLagrange.h utils.h
+libLagrange.o: libLagrange.c libLagrange.h utils.h
+libNewton.o: libNewton.c libNewton.h utils.h
+libUtils.o: utils.c utils.h
 
 clean:
 	-rm -f  $(objs) *~ $(program)
