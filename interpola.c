@@ -4,10 +4,12 @@
 #include "libLagrange.h"
 #include "libNewton.h"
 
+
 int main(int argc, char **argv) {
 	int_t n = 0;
 	// Vetores de pontos (x e y) e os pontos das abcissas
-	real_t *tabela, pontoX = 0.0, *pontosX, intervalo[2];
+	real_t *tabela, pontoX = 0.0, *pontosX, intervalo[2],
+    tempoL, tempoN, pL = 0, pN = 0;
 
 	pontoX = atof(argv[1]);
 
@@ -45,9 +47,21 @@ int main(int argc, char **argv) {
         exit(1);
     }
 
-	printf("\nfL(x) = %lf\n", pLagrange(n, pontoX, tabela));
-	printf("\nfD(x) = %lf\n", pNewton(n, pontoX, tabela));
-	free(tabela);
+    // Funcao do polinomio de Lagrange cronometrado.
+    tempoL = timestamp();
+    pL = pLagrange(n, pontoX, tabela);
+    tempoL = timestamp() - tempoL;
+    
+    // Funcao do polinomio de Newton cronometrado.
+    tempoN = timestamp();
+    pN = pNewton(n, pontoX, tabela);
+    tempoN = timestamp() - tempoN;
+
+    // Impressao dos dados obtidos.
+	printf("fL(x) = %lf\nfD(x) = %lf\n\n", pL, pN);
+	printf("tempo Lagrange: %lf\ntempo Newton: %lf\n", tempoL, tempoN);
+
+    free(tabela);
     free(pontosX);
 	return 0;
 }

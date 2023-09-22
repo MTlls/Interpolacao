@@ -57,6 +57,4 @@ void liberaTriangular(real_t **matriz, int_t n) {
 	}
 
 	free(matriz);
-	// so pra ter certeza
-	matriz = NULL;
 }
