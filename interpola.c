@@ -38,7 +38,7 @@ int main(int argc, char** argv) {
 
     // Le n pontos x,y
     for (int_t i = 0; i < n; i++) {
-        if (scanf("%lf %lf", &tabela[2 * i], &tabela[(2 * i) + 1]) == 0) {
+        if (scanf("%lf %lf", &tabela[2 * i], &tabela[(2 * i) + 1]) == EOF) {
             fprintf(stderr, "Erro ao ler a entrada.\n");
             exit(1);
         }
