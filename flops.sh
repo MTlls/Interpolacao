@@ -27,12 +27,12 @@ done
 
 echo
 grep -E 'fL\(x\)' FLOPS_DP.log
-grep -e 'Tempo Lagrange' FLOPS_DP.log | sed 's/$/\/s/'
+grep -e 'Tempo Lagrange' FLOPS_DP.log | sed 's/$//'
 awk '/Region POLINOMIO_1, Group 1: FLOPS_DP/,/Region POLINOMIO_2, Group 1: FLOPS_DP/' FLOPS_DP.log | awk '/DP \[?MFLOP\/s\]?/ && !/AVX DP \[?MFLOP\/s\]?/' | sed 's/ //g' | cut -d '|' -f 3 | sed 's/$/ MFLOP\/s/'
 echo
 
 grep -E 'fN\(x\)' FLOPS_DP.log
-grep -e 'Tempo Newton' FLOPS_DP.log | sed 's/$/\/s/'
+grep -e 'Tempo Newton' FLOPS_DP.log | sed 's/$//'
 awk '/Region POLINOMIO_2, Group 1: FLOPS_DP/,/Region POLINOMIO_1, Group 1: FLOPS_DP/' FLOPS_DP.log | awk '/DP \[?MFLOP\/s\]?/ && !/AVX DP \[?MFLOP\/s\]?/' | sed 's/ //g' | cut -d '|' -f 3 | sed 's/$/ MFLOP\/s/'
 echo
 

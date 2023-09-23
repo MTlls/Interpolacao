@@ -1,5 +1,5 @@
-override CFLAGS += -Wall -g -O3 -mavx -march=native # gerar "warnings" detalhados e infos de depuração
-LDLIBS = -lm
+override CFLAGS += -Wall -g -O3 -mavx -march=native -I${LIKWID_HOME}/include # gerar "warnings" detalhados e infos de depuração
+LDLIBS = -lm -L${LIKWID_HOME}/lib -llikwid
 program = interpola
 objs =  interpola.o utils.o libNewton.o libLagrange.o
 
