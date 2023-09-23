@@ -3,7 +3,7 @@
 #include "utils.h"
 #include "libLagrange.h"
 #include "libNewton.h"
-
+#include "likwid.h"
 
 int main(int argc, char **argv) {
 	int_t n = 0;
@@ -47,17 +47,31 @@ int main(int argc, char **argv) {
         exit(1);
     }
 
-    // Funcao do polinomio de Lagrange cronometrado.
-    tempoL = timestamp();
-    pL = pLagrange(n, pontoX, tabela);
-    tempoL = timestamp() - tempoL;
-    
-    // Funcao do polinomio de Newton cronometrado.
-    tempoN = timestamp();
-    pN = pNewton(n, pontoX, tabela);
-    tempoN = timestamp() - tempoN;
+	// Inicializa o marcador do likwid
+	LIKWID_MARKER_INIT;
 
-    // Impressao dos dados obtidos.
+	// Funcao do polinomio de Lagrange cronometrado e contabilizado pelo likwid
+	LIKWID_MARKER_START(markerName("POLINIOMIO", 1));
+
+	tempoL = timestamp();
+	pL = pLagrange(n, pontoX, tabela);
+	tempoL = timestamp() - tempoL;
+
+	LIKWID_MARKER_STOP(markerName("POLINIOMIO", 1));
+
+	// Funcao do polinomio de Newton cronometrado e contabilizado pelo likwid
+	LIKWID_MARKER_START(markerName("POLINIOMIO", 2));
+
+	tempoN = timestamp();
+	pN = pNewton(n, pontoX, tabela);
+	tempoN = timestamp() - tempoN;
+    
+	LIKWID_MARKER_STOP(markerName("POLINIOMIO", 2));
+
+	// Fecha o marcador do likwid
+	LIKWID_MARKER_CLOSE;
+
+	// Impressao dos dados obtidos.
 	printf("fL(x) = %lf\nfD(x) = %lf\n\n", pL, pN);
 	printf("tempo Lagrange: %lf\ntempo Newton: %lf\n", tempoL, tempoN);
 

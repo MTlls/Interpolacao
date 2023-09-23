@@ -1,5 +1,5 @@
 #include "libLagrange.h"
-
+#include "likwid.h"
 #include <math.h>
 #include <stdio.h>
 
