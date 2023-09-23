@@ -18,11 +18,11 @@ libNewton.o: libNewton.c libNewton.h utils.h
 libUtils.o: utils.c utils.h
 
 clean:
-	@echo "Limpando sujeira ..."
+	@echo "Limpando sujeira..."
 	@rm -f *~ *.bak
 
 purge: clean
-	@echo "Limpando tudo ..."
+	@echo "Limpando tudo..."
 	@rm -f $(program) *.o core a.out $(DISTDIR) $(DISTDIR).tar
 
 dist: purge

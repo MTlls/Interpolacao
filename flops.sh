@@ -11,6 +11,11 @@ PROGRAM="interpola"
 MAKEFILE="make"
 PURGE="purge"
 
+if [ $# -ne 1 ]; then
+    echo "O programa não foi chamado com o argumento correto." >&2
+    return 1
+fi
+
 arg="$1"
 
 make -B CFLAGS="${CFLAGS}" LFLAGS="${LFLAGS}"
@@ -18,11 +23,17 @@ make -B CFLAGS="${CFLAGS}" LFLAGS="${LFLAGS}"
 for k in $METRICA
 do
     likwid-perfctr -C ${CPU} -g ${k} -m ./${PROGRAM} ${arg} > ${k}.log
-    flops=$(awk -F "|" '/\| +DP \[?MFLOP\/s\]?/ { print $3 }' ${k}.log | sed 's/ //g')
-
-    sed -i '/Region/,$d' ${k}.log
-    echo "$flops" | awk -v k="$k" '{print "DP [MFLOPS/s] " $0}' >> "${k}.log"
-    sed -i '/^-*$/,/^-*$/d' ${k}.log
-    cat ${k}.log
 done
 
+echo
+grep -E 'fL\(x\)' FLOPS_DP.log
+grep -e 'Tempo Lagrange' FLOPS_DP.log | sed 's/$/\/s/'
+awk '/Region POLINOMIO_1, Group 1: FLOPS_DP/,/Region POLINOMIO_2, Group 1: FLOPS_DP/' FLOPS_DP.log | awk '/DP MFLOP\/s/ && !/AVX DP MFLOP\/s/' | sed 's/ //g' | cut -d '|' -f 3 | sed 's/$/ MFLOP\/s/'
+echo
+
+grep -E 'fN\(x\)' FLOPS_DP.log
+grep -e 'Tempo Newton' FLOPS_DP.log | sed 's/$/\/s/'
+awk '/Region POLINOMIO_2, Group 1: FLOPS_DP/,/Region POLINOMIO_1, Group 1: FLOPS_DP/' FLOPS_DP.log | awk '/DP MFLOP\/s/ && !/AVX DP MFLOP\/s/' | sed 's/ //g' | cut -d '|' -f 3 | sed 's/$/ MFLOP\/s/'
+echo
+
+make purge

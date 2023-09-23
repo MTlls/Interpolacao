@@ -16,7 +16,7 @@ real_t pLagrange(int_t n, real_t pontoX, real_t *tabela) {
 }
 
 /**
- * Funcao que calcula a funcao L, sendo i o indice do i-gésimo L do polinomio.
+ * Funcao que calcula a funcao L, sendo i o indice do i-ésimo L do polinomio.
  * Recebe:
  * Número de pontos (n);
  * O parametro x (pontoX) no qual queremos descobrir o f(x);
