@@ -27,14 +27,16 @@ real_t pNewton(int_t n, real_t pontoX, real_t *tabela) {
 }
 
 real_t montaDiffDivididas(int_t ordem, int_t indiceA, int_t indiceB, real_t **diff_divididas, real_t *tabela) {
-	// Ponto de parada retorna f(x)
-	if(ordem == 0)
-		return diff_divididas[indiceA][0] = tabela[(2 * indiceA) + 1];
-
-	// Salva o valor na tabela de diferencas divididas e retorna esse valor. Utiliza recursao para funcionar
-	diff_divididas[indiceA][ordem] =
-	    (montaDiffDivididas(ordem - 1, indiceA + 1, indiceB, diff_divididas, tabela) - montaDiffDivididas(ordem - 1, indiceA, indiceB - 1, diff_divididas, tabela)) / (tabela[2 * indiceB] - tabela[indiceA * 2]);
-	return (diff_divididas)[indiceA][ordem];
+	for (int_t i = 0; i <= ordem; i++) {
+		for (int_t j = indiceA; j <= indiceB - i; j++) {
+			if (i == 0) {
+				diff_divididas[j][i] = tabela[2 * j + 1];
+			} else {
+				diff_divididas[j][i] = (diff_divididas[j + 1][i - 1] - diff_divididas[j][i - 1]) / (tabela[2 * (j + i)] - tabela[2 * j]);
+			}
+		}
+	}
+	return diff_divididas[indiceA][ordem];
 }
 
 real_t **alocaTriangular(int_t n) {
