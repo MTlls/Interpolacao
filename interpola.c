@@ -79,6 +79,7 @@ int main(int argc, char** argv) {
     // Impressao dos dados obtidos.
     printf("fL(x) = %lf\n", pL);
     printf("Tempo Lagrange: %lf\n", tempoL);
+    putchar('\n');
     printf("fN(x) = %lf\n", pN);
     printf("Tempo Newton: %lf\n", tempoN);
 
